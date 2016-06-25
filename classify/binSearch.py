@@ -8,13 +8,20 @@ def countLines():
     # Get the length of whole .txt file and output it
     lines = [line.rstrip('\n') for line in open('output_flattened.txt')]            # Make a list where each element is a line from the output_flattened.txt
     numLines = len(lines)                                                           # Get the number of lines in the .txt file
-    print("# of lines: " + str(numLines))                                           # Output it
+    # print("# of lines: " + str(numLines))                                           # Output it
+
+    numChars = 0
+    for line in lines:
+        numChars += len(line)
+    print("# of chars: " + str(numChars))
 
     # Get the length of the .txt without blank lines and output it
     linesCopy = lines                                                               # Copy the list holding the .txt file
     while '' in linesCopy:
         linesCopy.remove('')                                                        # Remove the blank lines
     numWOutEmpty = len(linesCopy)                                                   # Get the number of lines in the .txt file without blank lines
+
+    print("Content of output_flattened.txt: ")
 
     return numLines
 
@@ -31,10 +38,16 @@ def countChars():
         charCount = charCount + len(item)
 
     print("Found " + str(charCount) + " characters")
-    for line in lines:
-        print(line)
+    linesNoN = [line.rstrip('\n') for line in lines]                            # Get rid of newlines before printing
 
-    return charCount
+    while '' in linesNoN:
+        linesNoN.remove('')                                                     # Also remove lines with just empty strings
+
+    for line in linesNoN:
+        print(line)                                                             # Now print each line, now that whitespace has been removed
+
+    # return numChars
+    return charCount                                                            # Also return the charCount
 
 def searchWords():
     divisions = 10
@@ -44,10 +57,13 @@ def searchWords():
         os.system("convert pb_flash.JPG -resize " + str(percent * 10) + "% -flatten -type Grayscale input.tif")
         os.system("tesseract -l eng input.tif output_flattened")
         charByDivision.append(countChars())
+        percentDict[percent] = countChars()
 
-
-
+percentDict = {}
 searchWords()
+print("percentDict (original): " + str(percentDict))
+percentWithMax = max(percentDict, key=percentDict.get)                          # Get the key (percent) with max value (countChars())
+print("Percent yielding max charCount: " + str(percentWithMax))
 
 # def binarySearch(percent, top, bottom, count):
 #     if abs(percent - top) < epsilon:
