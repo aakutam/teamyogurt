@@ -38,10 +38,16 @@ def countChars():
         charCount = charCount + len(item)
 
     print("Found " + str(charCount) + " characters")
-    for line in lines:
-        print(line)
+    linesNoN = [line.rstrip('\n') for line in lines]                            # Get rid of newlines before printing
 
-    return numChars
+    while '' in linesNoN:
+        linesNoN.remove('')                                                     # Also remove lines with just empty strings
+
+    for line in linesNoN:
+        print(line)                                                             # Now print each line, now that whitespace has been removed
+
+    # return numChars
+    return charCount                                                            # Also return the charCount
 
 def searchWords():
     divisions = 10
@@ -51,10 +57,13 @@ def searchWords():
         os.system("convert pb_flash.JPG -resize " + str(percent * 10) + "% -flatten -type Grayscale input.tif")
         os.system("tesseract -l eng input.tif output_flattened")
         charByDivision.append(countChars())
+        percentDict[percent] = countChars()
 
-
-
+percentDict = {}
 searchWords()
+print("percentDict (original): " + str(percentDict))
+percentWithMax = max(percentDict, key=percentDict.get)                          # Get the key (percent) with max value (countChars())
+print("Percent yielding max charCount: " + str(percentWithMax))
 
 # def binarySearch(percent, top, bottom, count):
 #     if abs(percent - top) < epsilon:
