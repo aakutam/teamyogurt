@@ -29,6 +29,7 @@ app.post('/api/photo',function(req,res){
 	    l: 'eng'
 	}
 	tesseract.process(__dirname + 'uploads/' + filename, options, function(err, text) {
+	};
 	    if (err) {
 		console.log(err);
 	    } else {
@@ -45,6 +46,6 @@ app.post('/api/photo',function(req,res){
     });
 });
 
-app.listen(3000,function(){
+app.listen(8080,function(){
     console.log("Working on port 3000");
 });
