@@ -28,24 +28,18 @@ app.post('/api/photo',function(req,res){
 	const options = {
 	    l: 'eng'
 	}
-	tesseract.process(__dirname + 'uploads/' + filename, options, function(err, text) {
-	};
+	tesseract.process(__dirname + '/uploads/' + filename, options, function(err, text) {
+	
 	    if (err) {
 		console.log(err);
 	    } else {
 		console.log(text);
 	    }
 	});
-/*	exec('./test.sh',['-o'], function(error, stdout, stderr) {
-            if (error) return error;
-            else {
-                res.end(stdout);
-            }
-        });
-*/
+
     });
 });
 
-app.listen(8080,function(){
-    console.log("Working on port 3000");
+app.listen(80, function(){
+    console.log("Working on port 80");
 });
