@@ -1,5 +1,6 @@
 import os
 import csv
+import re
 
 epsilon = 0.5
 
@@ -22,64 +23,65 @@ def countLines():
 
     print("Content of output_flattened.txt: ")
 
+    return numLines
+
+def countChars():
+    # lines = [line.rstrip('\n') for line in open('output_flattened.txt')]
+    delimiter = '-'
+    lines = open('output_flattened.txt').readlines()
+    joinedLines = delimiter.join(lines)
+    regPattern = re.compile('[A-Za-z]+')
+    foundItems = regPattern.findall(joinedLines)
+
+    charCount = 0
+    for item in foundItems:
+        charCount = charCount + len(item)
+
+    print("Found " + str(charCount) + " characters")
     for line in lines:
-        print(line)                                                                 # Print the contents of the .txt file
+        print(line)
 
     return numChars
 
+def searchWords():
+    divisions = 10
+    charByDivision = []
+
+    for percent in range(divisions):
+        os.system("convert pb_flash.JPG -resize " + str(percent * 10) + "% -flatten -type Grayscale input.tif")
+        os.system("tesseract -l eng input.tif output_flattened")
+        charByDivision.append(countChars())
+
+
+
+searchWords()
+
 # def binarySearch(percent, top, bottom, count):
 #     if abs(percent - top) < epsilon:
-#         print("Final output: ")
-#         os.system("convert pb_flash.JPG -resize " + str(percent) + "% -flatten -type Grayscale input.tif")
-#         os.system("tesseract -l eng input.tif output_flattened")
-#         print(str(countLines()))
+#         countLinesPrinted()
 #         return percent
-#
 #     num_lines = []
 #     for value in [percent, top, bottom]:
 #         os.system("convert pb_flash.JPG -resize " + str(value) + "% -flatten -type Grayscale input.tif")
 #         os.system("tesseract -l eng input.tif output_flattened")
 #         num_lines.append(countLines())
-#
+
 #     curr_count, top_count, bot_count = num_lines
-#     print("What's curr_count " + str(curr_count))
-#     print("What's top_count " + str(top_count))
-#
+
 #     if curr_count < top_count:
-#         print("Top: " + str(top) + " Percent: " + str((percent + top) / 2.0) + " Bottom: " + str(percent))
+#         print("Top: " + str(top) + " Percent: " + str(percent) + " Bottom: " + str(bottom))
 #         return binarySearch((percent + top) / 2.0, top, percent, top_count)
 #     else:
-#         print("Top: " + str(percent) + " Percent: " + str((percent + bottom) / 2.0) + " Bottom: " + str(bottom))
+#         print("Top: " + str(top) + " Percent: " + str(percent) + " Bottom: " + str(bottom))
 #         return binarySearch((percent + bottom) / 2.0, percent, bottom, bot_count)
-#
-#     # if num == count:
-#     #     return midPercent
-#     # elif num > count:
-#     #     return midPercent + binarySearch(midPercent, num)
-#     # elif num < count:
-#     #     return binarySearch(midPercent, num)
-#     # else:
-#     #     print("Error")
 
-def binarySearch(percent, top, bottom, count):
-    for i in range(0,10):
-        print("Iteration #" + str(i))
-        if abs(percent - top) < epsilon:
-            print("Final output: ")
-            os.system("convert pb_flash.JPG -resize " + str(percent) + "% -flatten -type Grayscale input.tif")
-            os.system("tesseract -l eng input.tif output_flattened")
-            print(str(countLines()))
-            return percent
+#     if num == count:
+#         return midPercent
+#     elif num > count:
+#         return midPercent + binarySearch(midPercent, num)
+#     elif num < count:
+#         return binarySearch(midPercent, num)
+#     else:
+#         print("Error")
 
-        num_lines = []
-        
-        for value in [percent, top, bottom]:
-            os.system("convert pb_flash.JPG -resize " + str(value) + "% -flatten -type Grayscale input.tif")
-            os.system("tesseract -l eng input.tif output_flattened")
-            num_lines.append(countLines())
-
-        curr_count, top_count, bot_count = num_lines
-        print("What's curr_count " + str(curr_count))
-        print("What's top_count " + str(top_count))
-
-binarySearch(50, 100, 0, 0)
+# binarySearch(50, 100, 0, 0)
