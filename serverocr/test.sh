@@ -1,7 +1,7 @@
 #!/bin/bash
 # declare STRING variable
-STRING="Hello World"
 #print variable on a screen
-echo $STRING
-pwd
+# $2 has the file name
+echo $2
+
 
