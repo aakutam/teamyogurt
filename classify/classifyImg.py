@@ -7,7 +7,7 @@ epsilon = 0.5
 
 def countLines():
     # Get the length of whole .txt file and output it
-    lines = [line.rstrip('\n') for line in open('output_flattened.txt')]            # Make a list where each element is a line from the output_flattened.txt
+    lines = [line.rstrip('\n') for line in open('/home/ubuntu/teamyogurt/classify/output_flattened.txt')]            # Make a list where each element is a line from the output_flattened.txt
     numLines = len(lines)                                                           # Get the number of lines in the .txt file
     # print("# of lines: " + str(numLines))                                           # Output it
 
@@ -29,7 +29,7 @@ def countLines():
 def countChars():
     # lines = [line.rstrip('\n') for line in open('output_flattened.txt')]
     delimiter = '-'
-    lines = open('output_flattened.txt').readlines()
+    lines = open('/home/ubuntu/teamyogurt/classify/output_flattened.txt').readlines()
     joinedLines = delimiter.join(lines)
     regPattern = re.compile('[A-Za-z]+')
     foundItems = regPattern.findall(joinedLines)
@@ -53,9 +53,10 @@ def countChars():
 def searchWords():
     divisions = 10
     charByDivision = []
-
+    filename = sys.argv[-1]
+    print("The filename is " + filename)
     for percent in range(divisions):
-        os.system("convert images/pb_flash.jpg -resize " + str(percent * 10) + "% -flatten -type Grayscale input.tif")
+        os.system("convert /home/ubuntu/teamyogurt/classify/images/pb_flash.jpg -resize " + str(percent * 10) + "% -flatten -type Grayscale input.tif")
         os.system("tesseract -l eng input.tif output_flattened")
         charByDivision.append(countChars())
         percentDict[percent] = countChars()

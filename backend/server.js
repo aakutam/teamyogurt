@@ -11,32 +11,27 @@ var storage =   multer.diskStorage({
   }
 });
 var upload = multer({ storage : storage}).single('userPhoto');
-var exec = require('child_process').execFile;
-var tesseract = require('node-tesseract');
+var exec = require('child_process').exec;
 
 app.get('/',function(req,res){
       res.sendFile(__dirname + "/index.html");
 });
 
 app.post('/api/photo',function(req,res){
+    console.log(req)
     upload(req,res,function(err) {
         if (err) {
             console.log(err)
             return res.end("Error uploading file.");
         }
 	const filename = req.file.originalname;
-	const options = {
-	    l: 'eng'
-	}
-	tesseract.process(__dirname + '/uploads/' + filename, options, function(err, text) {
-	
+	exec('python ../classify/classifyImg.py ' + filename, function(err, stdout, stderr) {
 	    if (err) {
 		console.log(err);
 	    } else {
-		console.log(text);
+		res.send(stdout);
 	    }
-	});
-
+	})
     });
 });
 
