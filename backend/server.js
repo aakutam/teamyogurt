@@ -25,10 +25,15 @@ app.post('/api/photo',function(req,res){
             return res.end("Error uploading file.");
         }
 	const filename = req.file.originalname;
-	exec('python ../classify/classifyImg.py ' + filename, function(err, stdout, stderr) {
+	const options = {
+	    maxBuffer: 2000 * 1024
+	};
+	exec('python ../classify/classifyImg.py ' + filename, options, function(err, stdout, stderr) {
 	    if (err) {
 		console.log(err);
 	    } else {
+		console.log("What's the problem");
+		console.log(stdout);
 		res.send(stdout);
 	    }
 	})
