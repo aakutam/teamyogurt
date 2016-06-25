@@ -1,6 +1,6 @@
 var express =   require("express");
 var multer  =   require('multer');
-var app         =   express();
+var app     =   express();
 var storage =   multer.diskStorage({
   destination: function (req, file, callback) {
     callback(null, './uploads');
@@ -18,18 +18,17 @@ app.get('/',function(req,res){
 
 app.post('/api/photo',function(req,res){
     upload(req,res,function(err) {
-        if(err) {
+        if (err) {
             console.log(err)
             return res.end("Error uploading file.");
         }
 	exec('./test.sh',['-o'], function(error, stdout, stderr) {
-      if (error) return error;
-      else{
-        res.end(stdout);
-    }
-
-    });
-});
+            if (error) return error;
+            else {
+                res.end(stdout);
+            }
+        });
+   });
 });
 
 app.listen(3000,function(){
