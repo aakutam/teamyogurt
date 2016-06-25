@@ -12,6 +12,7 @@ var storage =   multer.diskStorage({
 });
 var upload = multer({ storage : storage}).single('userPhoto');
 var exec = require('child_process').execFile;
+var tesseract = require('node-tesseract');
 
 app.get('/',function(req,res){
       res.sendFile(__dirname + "/index.html");
@@ -23,13 +24,24 @@ app.post('/api/photo',function(req,res){
             console.log(err)
             return res.end("Error uploading file.");
         }
-	var filename = req.file.originalname;
-	exec('./test.sh',['-o'], function(error, stdout, stderr) {
+	const filename = req.file.originalname;
+	const options = {
+	    l: 'eng'
+	};
+	tesseract.process(__dirname + 'uploads/' + filename, options, function(err, text) {
+	    if (err) {
+		console.log(err);
+	    } else {
+		console.log(text);
+	    }
+	});
+/*	exec('./test.sh',['-o'], function(error, stdout, stderr) {
             if (error) return error;
             else {
                 res.end(stdout);
             }
         });
+*/
     });
 });
 
