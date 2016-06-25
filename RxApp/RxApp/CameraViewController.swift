@@ -8,10 +8,12 @@
 
 import UIKit
 
-class CameraViewController: UIViewController {
+class CameraViewController: UIViewController, UINavigationControllerDelegate, UIImagePickerControllerDelegate {
+    
 
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var CameraBtn: UIButton!
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -19,13 +21,25 @@ class CameraViewController: UIViewController {
     }
 
     override func didReceiveMemoryWarning() {
+        
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+        var imagePicker: UIImagePickerController!
     @IBAction func CameraButton(sender: UIButton) {
+        imagePicker =  UIImagePickerController()
+        imagePicker.delegate = self
+        imagePicker.sourceType = .Camera
+        
+        presentViewController(imagePicker, animated: true, completion: nil)
         
         
     }
+    func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
+        imagePicker.dismissViewControllerAnimated(true, completion: nil)
+        imageView.image = info[UIImagePickerControllerOriginalImage] as? UIImage
+    }
+    
     
 
     /*

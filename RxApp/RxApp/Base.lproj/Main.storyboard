@@ -54,7 +54,7 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Take Picture"/>
                                 <connections>
-                                    <action selector="CameraButton:" destination="0wO-LT-TtD" eventType="touchUpInside" id="zQk-up-ofc"/>
+                                    <action selector="CameraButton:" destination="0wO-LT-TtD" eventType="touchUpInside" id="ohn-UD-sDP"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -64,8 +64,7 @@
                     <navigationItem key="navigationItem" id="mP0-WH-50t"/>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
-                        <outlet property="CameraBtn" destination="aoZ-Uo-cPe" id="sQG-Tu-JYY"/>
-                        <outlet property="imageView" destination="sC8-kn-bKI" id="MSW-4S-IOM"/>
+                        <outlet property="imageView" destination="sC8-kn-bKI" id="0uQ-Nv-PlV"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="jaK-zt-rPY" userLabel="First Responder" sceneMemberID="firstResponder"/>
