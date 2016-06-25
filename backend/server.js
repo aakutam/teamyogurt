@@ -27,7 +27,7 @@ app.post('/api/photo',function(req,res){
 	const filename = req.file.originalname;
 	const options = {
 	    l: 'eng'
-	};
+	}
 	tesseract.process(__dirname + 'uploads/' + filename, options, function(err, text) {
 	    if (err) {
 		console.log(err);
