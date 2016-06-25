@@ -8,7 +8,7 @@ epsilon = 0.5
 engCount = 0
 def countLines():
     # Get the length of whole .txt file and output it
-    lines = [line.rstrip('\n') for line in open('output_flattened.txt')]            # Make a list where each element is a line from the output_flattened.txt
+    lines = [line.rstrip('\n') for line in open('/home/ubuntu/teamyogurt/classify/output_flattened.txt')]            # Make a list where each element is a line from the output_flattened.txt
     numLines = len(lines)                                                           # Get the number of lines in the .txt file
     # print("# of lines: " + str(numLines))                                           # Output it
 
@@ -30,7 +30,7 @@ def countLines():
 def countChars():
     # lines = [line.rstrip('\n') for line in open('output_flattened.txt')]
     delimiter = '-'
-    lines = open('output_flattened.txt').readlines()
+    lines = open('/home/ubuntu/teamyogurt/classify/output_flattened.txt').readlines()
     joinedLines = delimiter.join(lines)
     regPattern = re.compile('[A-Za-z]+')
     foundItems = regPattern.findall(joinedLines)
@@ -62,7 +62,7 @@ def searchWords():
     charByDivision = []
 
     for percent in range(divisions):
-        os.system("convert images/pb_flash.jpg -resize " + str(percent * 10) + "% -flatten -type Grayscale input.tif")
+        os.system("convert /home/ubuntu/teamyogurt/classify/images/pb_flash.jpg -resize " + str(percent * 10) + "% -flatten -type Grayscale input.tif")
         os.system("tesseract -l eng input.tif output_flattened")
         charByDivision.append(countChars())
         percentCharDict[percent] = countChars()
@@ -77,32 +77,3 @@ print("Percent yielding max charCount: " + str(percentWithMax))
 
 percentEngWithMax = max(percentEngDict, key=percentEngDict.get)
 print("Percent yielding max engCount: " + str(percentEngWithMax))
-# def binarySearch(percent, top, bottom, count):
-#     if abs(percent - top) < epsilon:
-#         countLinesPrinted()
-#         return percent
-#     num_lines = []
-#     for value in [percent, top, bottom]:
-#         os.system("convert pb_flash.JPG -resize " + str(value) + "% -flatten -type Grayscale input.tif")
-#         os.system("tesseract -l eng input.tif output_flattened")
-#         num_lines.append(countLines())
-
-#     curr_count, top_count, bot_count = num_lines
-
-#     if curr_count < top_count:
-#         print("Top: " + str(top) + " Percent: " + str(percent) + " Bottom: " + str(bottom))
-#         return binarySearch((percent + top) / 2.0, top, percent, top_count)
-#     else:
-#         print("Top: " + str(top) + " Percent: " + str(percent) + " Bottom: " + str(bottom))
-#         return binarySearch((percent + bottom) / 2.0, percent, bottom, bot_count)
-
-#     if num == count:
-#         return midPercent
-#     elif num > count:
-#         return midPercent + binarySearch(midPercent, num)
-#     elif num < count:
-#         return binarySearch(midPercent, num)
-#     else:
-#         print("Error")
-
-# binarySearch(50, 100, 0, 0)
