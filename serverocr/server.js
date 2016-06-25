@@ -22,8 +22,14 @@ app.post('/api/photo',function(req,res){
             console.log(err)
             return res.end("Error uploading file.");
         }
-        res.end("File is uploaded");
+	exec('./test.sh',['-o'], function(error, stdout, stderr) {
+      if (error) return error;
+      else{
+        res.end(stdout);
+    }
+
     });
+});
 });
 
 app.listen(3000,function(){

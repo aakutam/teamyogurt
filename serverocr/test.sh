@@ -3,4 +3,5 @@
 STRING="Hello World"
 #print variable on a screen
 echo $STRING
+pwd
 
